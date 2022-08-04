@@ -7,7 +7,7 @@
 %%% Created : 28. 四月 2021 11:50
 %%%-------------------------------------------------------------------
 -author("yinye").
--include("utils/log/yyu_logger.hrl").
+-include("yyu_logger.hrl").
 
 -ifndef(YYU_GS).
 -define(YYU_GS,yyu_gs_hrl).

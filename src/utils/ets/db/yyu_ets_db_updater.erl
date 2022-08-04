@@ -8,7 +8,7 @@
 -module(yyu_ets_db_updater).
 -author("yinye").
 -include("yyu_comm.hrl").
--include("utils/ets/db/yyu_ets_db.hrl").
+-include("yyu_ets_db.hrl").
 
 %% API functions defined
 -export([update/1,update/2]).

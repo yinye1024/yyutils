@@ -8,7 +8,7 @@
 %%%-------------------------------------------------------------------
 -author("yinye").
 -include("yyu_comm_atoms.hrl").
--include("utils/log/yyu_logger.hrl").
+-include("yyu_logger.hrl").
 
 -ifndef(YYU_COMM).
 -define(YYU_COMM,yyu_comm_hrl).

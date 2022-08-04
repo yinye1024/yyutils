@@ -10,7 +10,7 @@
 -author("zenmind").
 
 -behavior(gen_server).
--include("utils/gs/yyu_gs.hrl").
+-include("yyu_gs.hrl").
 -include("yyu_comm.hrl").
 
 -define(SERVER,?MODULE).
