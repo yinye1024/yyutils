@@ -8,7 +8,7 @@
 -module(yyu_ets_db_helper).
 -author("yinye").
 -include("yyu_comm_atoms.hrl").
--include("utils/ets/db/yyu_ets_db.hrl").
+-include("yyu_ets_db.hrl").
 -include_lib("stdlib/include/ms_transform.hrl").
 
 %% API functions defined

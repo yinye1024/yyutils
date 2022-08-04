@@ -9,7 +9,7 @@
 -module(yyu_ets_db_edata).
 -author("yinye").
 -include("yyu_comm_atoms.hrl").
--include("utils/ets/db/yyu_ets_db.hrl").
+-include("yyu_ets_db.hrl").
 
 %% API functions defined
 -export([new/2,get_key/1, get_ver/1,incr_ver/1]).
