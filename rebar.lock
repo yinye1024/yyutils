@@ -3,10 +3,6 @@
  {<<"lager">>,
   {git,"https://github.com/erlang-lager/lager.git",
        {ref,"8c32954cdb40791047f8f3fb4f77459af0ba573f"}},
-  0},
- {<<"mochiweb">>,
-  {git,"https://github.com/mochi/mochiweb.git",
-       {ref,"d3d3d7bd54d87afa45470a540d41d62e19a31400"}},
   0}]}.
 [
 {pkg_hash,[
