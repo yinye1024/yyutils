@@ -16,6 +16,7 @@
 %% API functions implements
 %% ===================================================================================
 client_test_() ->
+  yyu_logger:start(),
   ?LOG_INFO({"client test ==================="}),
 
   {foreach,
