@@ -22,10 +22,10 @@
 %% ===================================================================================
 %% 一般使用这个就可以了，单进程写，多进程读，针对写少读多的情况。
 init({DataTbName,VerTbName}) ->
-  yyu_ets_cache_dao:init_single_gen_write(DataTbName),
+  yyu_ets_cache_dao:init(DataTbName),
 
   %% 对应数据在数据库中的版本号，通过该版本号判断是否需要入库
-  yyu_ets_cache_dao:init_single_gen_write(VerTbName),
+  yyu_ets_cache_dao:init(VerTbName),
   ?OK.
 
 %% 多进程写，而且存储的数据size都比较小，只做写并发，读不并发

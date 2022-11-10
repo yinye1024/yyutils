@@ -6,8 +6,9 @@
 %%% @end
 %%% Created : 28. 六月 2021 19:07
 %%%-------------------------------------------------------------------
--module(yyutils_test).
+-module(yyutils_test_case).
 -author("yinye").
+%% yyu_comm.hrl 和 eunit.hrl 都定义了 IF 宏，eunit.hrl做了保护
 -include("yyu_comm.hrl").
 -include_lib("eunit/include/eunit.hrl").
 

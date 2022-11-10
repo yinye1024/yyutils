@@ -11,7 +11,7 @@
 -include("yyu_comm_atoms.hrl").
 
 %% API functions defined
--export([init_single_gen_write/1,init_multi_gen_write/1,is_inited/1]).
+-export([init/1,init_multi_gen_write/1,is_inited/1]).
 -export([is_exist/2,get_data/2,get_data/3,select_all_by_Q/2,get_all_kvList/1, get_all_keyList/1, get_all_valueList/1,get_all_map/1]).
 -export([put_data/2,put_data/3,remove/2,select_remove/2,clean/1]).
 -export([foreach/3,get_total_count/1,incr_and_get/3]).
@@ -19,7 +19,7 @@
 %% API functions implements
 %% ===================================================================================
 %% 一般使用这个就可以了，单进程写，多进程读，针对写少读多的情况。
-init_single_gen_write(TbName) ->
+init(TbName) ->
   ets:new(TbName,[set,public,named_table, {keypos,1}, {write_concurrency,false}, {read_concurrency,true}]),
   ?OK.
 
