@@ -12,6 +12,7 @@
 
 %% API functions defined
 -export([num2string/1]).
+-export([build_gen_name/2]).
 -export([sub_atom/2,list_to_atom/1]).
 -export([to_atom/1,to_list/1,to_binary/1,to_float/1,to_integer/1,to_tuple/1]).
 -export([term_to_string/1,string_to_term/1,string_to_num/1]).
@@ -26,6 +27,10 @@ num2string(N)  when is_integer(N)->
   erlang:integer_to_list(N);
 num2string(N)  when is_float(N)->
   num2string(N).
+
+%% 根据Mod和Id 创建gen的唯一标识
+build_gen_name(Mod,GenId) when is_atom(Mod) andalso is_number(GenId)->
+ to_atom( to_list(Mod)++"_"++num2string(GenId)).
 
 to_atom(Input) when is_atom(Input)->
   Input;

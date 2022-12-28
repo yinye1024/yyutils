@@ -1,5 +1,5 @@
 %%%-------------------------------------------------------------------
-%%% @author zenmind
+%%% @author yinye
 %%% @copyright (C) 2021, <COMPANY>
 %%% @doc
 %%%     网关进程，每个用户一个
@@ -7,7 +7,7 @@
 %%% Created : 25. 四月 2021 19:45
 %%%-------------------------------------------------------------------
 -module(yyu_multi_sup).
--author("zenmind").
+-author("yinye").
 
 -behavior(supervisor).
 -include("yyu_comm.hrl").

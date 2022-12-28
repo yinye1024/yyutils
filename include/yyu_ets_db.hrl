@@ -1,12 +1,12 @@
 %%%-------------------------------------------------------------------
-%%% @author zenmind
+%%% @author yinye
 %%% @copyright (C) 2021, <COMPANY>
 %%% @doc
 %%%
 %%% @end
 %%% Created : 28. 四月 2021 11:50
 %%%-------------------------------------------------------------------
--author("zenmind").
+-author("yinye").
 
 -ifndef(YYU_ETS_DB).
 -define(YYU_ETS_DB,yyu_ets_db_hrl).

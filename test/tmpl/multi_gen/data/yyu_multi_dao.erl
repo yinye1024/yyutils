@@ -1,5 +1,5 @@
 %%%-------------------------------------------------------------------
-%%% @author zenmind
+%%% @author yinye
 %%% @copyright (C) 2021, <COMPANY>
 %%% @doc
 %%%
@@ -7,7 +7,7 @@
 %%% Created : 25. 四月 2021 19:45
 %%%-------------------------------------------------------------------
 -module(yyu_multi_dao).
--author("zenmind").
+-author("yinye").
 
 -include("yyu_comm.hrl").
 
