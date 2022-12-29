@@ -5,7 +5,7 @@
 %%%
 %%% @end
 %%%-------------------------------------------------------------------
--module(yyu_proc_db).
+-module(yyu_proc_db_dao).
 -author("yinye").
 -include("yyu_comm_atoms.hrl").
 

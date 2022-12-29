@@ -34,7 +34,7 @@
         catch
           throw:done ->?OK;
           Error:Reason ->
-            ?ERROR({error,[Error,Reason,erlang:get_stacktrace()]})
+            ?LOG_ERROR({error,[Error,Reason,erlang:get_stacktrace()]})
         end).
 
 -endif.
