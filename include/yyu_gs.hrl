@@ -24,8 +24,8 @@
   catch
     throw:done  ->
         {?REPLY,?OK,State};
-    Err:Reason ->
-      ?LOG_ERROR({[stacktrace,erlang:get_stacktrace()],[info,Req],[err,Err],[reason,Reason],[state,State]}),
+    Err:Reason:Stacktrace ->
+      ?LOG_ERROR({[stacktrace,Stacktrace],[info,Req],[err,Err],[reason,Reason],[state,State]}),
       {?REPLY,{?FAIL,Reason},State}
   end
 ).
@@ -43,8 +43,8 @@
   catch
     throw:done  ->
         {?NO_REPLY,State};
-    Err:Reason ->
-      ?LOG_ERROR({[stacktrace,erlang:get_stacktrace()],[info,Req],[err,Err],[reason,Reason],[state,State]}),
+    Err:Reason:Stacktrace ->
+      ?LOG_ERROR({[stacktrace,Stacktrace],[info,Req],[err,Err],[reason,Reason],[state,State]}),
       {?NO_REPLY,State}
   end
 ).
@@ -62,8 +62,8 @@
   catch
     throw:done  ->
         {?NO_REPLY,State};
-    Err:Reason ->
-      ?LOG_ERROR({[info,Req],[err,Err],[reason,Reason],[state,State]}),
+    Err:Reason:Stacktrace ->
+      ?LOG_ERROR({[stacktrace,Stacktrace],[info,Req],[err,Err],[reason,Reason],[state,State]}),
       {?NO_REPLY,State}
   end
 ).
@@ -73,8 +73,8 @@
   try
     do_terminate(Reason,State)
   catch
-    Err:Reason ->
-      ?LOG_ERROR({[info, Reason],[err,Err],[reason,Reason],[state,State]}),
+    Err:Reason:Stacktrace ->
+      ?LOG_ERROR({[stacktrace,Stacktrace],[info, Reason],[err,Err],[reason,Reason],[state,State]}),
       ?OK
   end
 ).

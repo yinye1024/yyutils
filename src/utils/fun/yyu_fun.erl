@@ -37,9 +37,8 @@ safe_run(Fun)->
         ?FALSE ->{?FAIL}
       end
   catch
-      ErrorType:ErrorReason  ->
-        STK = erlang:get_stacktrace(),
-        ?LOG_ERROR({ErrorType,ErrorReason,STK}),
+      ErrorType:ErrorReason:Stacktrace  ->
+        ?LOG_ERROR({ErrorType,ErrorReason,Stacktrace}),
         {?FAIL}
   end.
 

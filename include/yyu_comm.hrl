@@ -33,8 +33,8 @@
           DoFun
         catch
           throw:done ->?OK;
-          Error:Reason ->
-            ?LOG_ERROR({error,[Error,Reason,erlang:get_stacktrace()]})
+          Error:Reason:Stacktrace ->
+            ?LOG_ERROR({error,[Error,Reason,Stacktrace]})
         end).
 
 -endif.

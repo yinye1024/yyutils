@@ -47,7 +47,7 @@ priv_do_db_update(VerMapKey,Pdata)->
       yyu_proc_db_helper:put_ver(VerMapKey,Key,Ver),
       ?OK
   catch
-    ErrorType:ErrorReason  ->
+    ErrorType:ErrorReason:_Stacktrace  ->
       ?LOG_ERROR({?DB_ERROR,?MODULE,ErrorType,ErrorReason}),
       ?OK
   end,

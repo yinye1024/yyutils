@@ -63,7 +63,7 @@ priv_do_db_update(VerTbName, Edata)->
       yyu_ets_db_helper:put_ver(VerTbName,Key,Ver),
       ?OK
   catch
-    ErrorType:ErrorReason  ->
+    ErrorType:ErrorReason:_Stacktrace  ->
       ?LOG_ERROR({?DB_ERROR,?MODULE,ErrorType,ErrorReason}),
       ?OK
   end,
