@@ -11,11 +11,16 @@
 -include("yyu_comm.hrl").
 
 %% API functions defined
--export([is_local_alive/1, is_global_alive/1,kill_pid/2,proc_gc/1]).
+-export([set_self_monitor_by/1,is_local_alive/1, is_global_alive/1,kill_pid/2,proc_gc/1]).
 
 %% ===================================================================================
 %% API functions implements
 %% ===================================================================================
+set_self_monitor_by(MonitorPid)->
+  erlang:monitor(process,MonitorPid),
+  ?OK.
+
+is_local_alive(?NOT_SET)->?FALSE;
 is_local_alive(Pid) when is_pid(Pid)->
   is_process_alive(Pid).
 
