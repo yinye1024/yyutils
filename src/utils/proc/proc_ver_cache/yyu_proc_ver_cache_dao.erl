@@ -31,7 +31,7 @@ get_all_key_ver_list(ProcId)->
   KvList = yyu_map:to_kv_list(DataMap),
   priv_get_all_key_ver_list(KvList,[]).
 priv_get_all_key_ver_list([{Key,Pdata}|Less],AccList)->
-  Ver = yyu_proc_data:get_ver(Pdata),
+  Ver = yyu_proc_ver_cache_item:get_ver(Pdata),
   priv_get_all_key_ver_list(Less,[{Key,Ver}|AccList]);
 priv_get_all_key_ver_list([],AccList)->
   yyu_list:reverse(AccList).
@@ -46,7 +46,7 @@ priv_get_all_key_ver_list([{Key,Pdata}|Less],KeyVerMap,AccList)->
   case yyu_map:get_value(Key,KeyVerMap) of
     ?NOT_SET -> AccList;
     CheckVer ->
-      CurVer = yyu_proc_data:get_ver(Pdata),
+      CurVer = yyu_proc_ver_cache_item:get_ver(Pdata),
       TmpAccList =
       case CurVer > CheckVer of
         ?TRUE -> [Pdata|AccList];
@@ -63,7 +63,7 @@ syn_pdata_list(ProcId,PdataList)->
   priv_syn_pdata_list(PdataList,ProcId),
   ?OK.
 priv_syn_pdata_list([NewPdata|Less],ProcId)->
-  Key = yyu_proc_data:get_key(NewPdata),
+  Key = yyu_proc_ver_cache_item:get_key(NewPdata),
   case get_pdata(ProcId,Key) of
     ?NOT_SET -> ?OK;
     OldData ->
@@ -81,14 +81,14 @@ get_all(ProcId)->
   DataMap.
 
 set_pdata(ProcId, NewPdata)->
-  Key = yyu_proc_data:get_key(NewPdata),
+  Key = yyu_proc_ver_cache_item:get_key(NewPdata),
   Result = priv_put_pdata(ProcId,Key,NewPdata),
   Result.
 
 set_pdata(ProcId, OldData, NewPdata)->
-  Key = yyu_proc_data:get_key(NewPdata),
-  OldVer = yyu_proc_data:get_ver(OldData),
-  NewVer = yyu_proc_data:get_ver(NewPdata),
+  Key = yyu_proc_ver_cache_item:get_key(NewPdata),
+  OldVer = yyu_proc_ver_cache_item:get_ver(OldData),
+  NewVer = yyu_proc_ver_cache_item:get_ver(NewPdata),
   case NewVer > OldVer of
     ?TRUE ->
       priv_put_pdata(ProcId,Key,NewPdata),

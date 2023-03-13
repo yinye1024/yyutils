@@ -11,7 +11,7 @@
 -include("yyu_comm.hrl").
 
 %% API functions defined
--export([is_fun_exported/3,safe_run/1]).
+-export([is_fun_exported/3,is_fun/1,is_fun/2,safe_run/1]).
 -export([call_do_fun/1,cast_do_fun/1,info_do_fun/1]).
 
 %% ===================================================================================
@@ -30,6 +30,12 @@ is_fun_exported(ModName, FunName, ArityNum)->
   erlang:function_exported(ModName, FunName, ArityNum).
 
 
+is_fun(Fun)->
+  erlang:is_function(Fun).
+%% ParamCount 入参个数
+is_fun(Fun,ParamCount)->
+  erlang:is_function(Fun,ParamCount).
+
 safe_run(Fun)->
   try
       case erlang:is_function(Fun) of
@@ -42,13 +48,13 @@ safe_run(Fun)->
         {?FAIL}
   end.
 
-call_do_fun({do_fun,Fun,Param}) when is_list(Param)->
-  erlang:apply(Fun,Param);
+call_do_fun({do_fun,Fun, ParamList}) when is_list(ParamList)->
+  erlang:apply(Fun, ParamList);
 call_do_fun(_Msg)->
   ?UNKNOWN.
 
-cast_do_fun({do_fun,Fun,Param}) when is_list(Param)->
-  erlang:apply(Fun,Param),
+cast_do_fun({do_fun,Fun, ParamList}) when is_list(ParamList)->
+  erlang:apply(Fun, ParamList),
   ?OK;
 cast_do_fun(_Msg)->
   ?UNKNOWN.

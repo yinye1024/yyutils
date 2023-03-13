@@ -24,13 +24,13 @@ init(ProcId)->
 get_data(ProcId,Key)->
   case yyu_proc_ver_cache_dao:get_pdata(ProcId,Key) of
     {?OK,Pdata} ->
-      yyu_proc_data:get_data(Pdata);
+      yyu_proc_ver_cache_item:get_data(Pdata);
     _->
       ?NOT_SET
   end.
 
 set_data(ProcId,{Key, Data, Ver})->
-  NewPdata = yyu_proc_data:new(Key,Data,Ver),
+  NewPdata = yyu_proc_ver_cache_item:new(Key,Data,Ver),
   Result =
   case yyu_proc_ver_cache_dao:get_pdata(ProcId,Key) of
     {?OK,OldPdata} ->

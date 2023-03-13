@@ -27,7 +27,7 @@ update({DataMapKey,VerMapKey})->
 priv_update(VerMapKey,Key,Pdata)->
   DbVer = yyu_proc_db_helper:get_ver(VerMapKey,Key),
 
-  case DbVer < yyu_proc_data:get_ver(Pdata) of
+  case DbVer < yyu_proc_db_item:get_ver(Pdata) of
     ?TRUE ->
       priv_do_db_update(VerMapKey,Pdata),
       ?OK;
@@ -38,12 +38,12 @@ priv_update(VerMapKey,Key,Pdata)->
 
 priv_do_db_update(VerMapKey,Pdata)->
 
-  UpdateFun = yyu_proc_data:get_update_fun(Pdata),
-  Data = yyu_proc_data:get_data(Pdata),
+  UpdateFun = yyu_proc_db_item:get_update_fun(Pdata),
+  Data = yyu_proc_db_item:get_data(Pdata),
   try
       UpdateFun(Data),
-      Key = yyu_proc_data:get_key(Pdata),
-      Ver = yyu_proc_data:get_ver(Pdata),
+      Key = yyu_proc_db_item:get_key(Pdata),
+      Ver = yyu_proc_db_item:get_ver(Pdata),
       yyu_proc_db_helper:put_ver(VerMapKey,Key,Ver),
       ?OK
   catch

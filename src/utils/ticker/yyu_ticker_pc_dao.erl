@@ -6,7 +6,7 @@
 %%% @end
 %%% Created : 02. 七月 2021 16:24
 %%%-------------------------------------------------------------------
--module(yyu_ticker_cache_dao).
+-module(yyu_ticker_pc_dao).
 -author("yinye").
 
 -include("yyu_comm.hrl").

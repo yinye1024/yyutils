@@ -12,10 +12,10 @@
 -include("yyu_comm.hrl").
 
 %% API functions defined
--export([new_map/0,put_value/3,get_value/2,get_value/3,remove/2,remove_all/2,delete/2]).
+-export([new_map/0,put_value/3,get_value/2,get_value/3, get_value_list/2,remove/2,remove_all/2,delete/2]).
 -export([is_empty/1,has_key/2,size_of/1,all_keys/1,all_values/1]).
 -export([to_kv_list/1,from_kv_list/1,for_each/3,for_each/2,copy/2,copy/3]).
--export([to_map/2]).
+-export([map/2,filter/2]).
 
 %% ===================================================================================
 %% API functions implements
@@ -40,6 +40,19 @@ get_value(Key,DefaultValue,Map)->
     {?OK,Value}->
       Value
   end.
+get_value_list(KeyList,Map)->
+  priv_get_value_list(KeyList,Map,[]).
+priv_get_value_list([Key|Less],Map,AccList)->
+  AccList_1 =
+  case yyu_map:get_value(Key,Map) of
+    ?NOT_SET -> AccList;
+    Value ->
+      [Value|AccList]
+  end,
+  priv_get_value_list(Less,Map,AccList_1);
+priv_get_value_list([],_Map,AccList)->
+  AccList.
+
 
 remove(Key,Map)->
   NewMap = maps:remove(Key,Map),
@@ -101,5 +114,10 @@ priv_copy([],_ExcludeKeyList,AccMap)->
   AccMap.
 
 %% Fun(K,V)-> V_1 = do_something_to(V),V_1 end.
-to_map(Fun,Map)->
+%% DataMap = yyu_map:map(PredFun,ItemMap),
+map(Fun,Map)->
   maps:map(Fun,Map).
+%% PredFun = fun(DataId,_Data) -> yyu_list:contains(DataId,DataIdList) end,
+%% DataMap = yyu_map:filter(PredFun,ItemMap),
+filter(PredFun,Map)->
+  maps:filter(PredFun,Map).

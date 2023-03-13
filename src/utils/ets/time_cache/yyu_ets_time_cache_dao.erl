@@ -12,7 +12,7 @@
 
 %% API functions defined
 -export([init/1,init_multi_gen_write/1,is_inited/1]).
--export([get_data/2,get_data/3]).
+-export([get_data/2,get_data/3, priv_get_cacheItem/2]).
 -export([put_data/4,remove/2,clean/1]).
 -export([check_and_clean_expired/1]).
 %% ===================================================================================
@@ -32,16 +32,25 @@ is_inited(TbName)->
   ets:info(TbName) =/= ?UNDEFINED.
 
 get_data(TbName,Key)->
-  case ets:lookup(TbName,Key) of
-    []-> ?NOT_SET;
-    [{_Key,CachedItem}]->
-      IsExpired = yyu_ets_time_cache_item:get_expired_time(CachedItem) < yyu_time:now_seconds(),
-      ?IF(IsExpired,?NOT_SET, yyu_ets_time_cache_item:get_data(CachedItem))
+  case priv_get_cacheItem(TbName,Key) of
+    ?NOT_SET -> ?NOT_SET;
+    CachedItem ->
+      ExpiredTime = yyu_ets_time_cache_item:get_expired_time(CachedItem),
+      IsExpired = ExpiredTime < yyu_time:now_seconds(),
+      ?IF(IsExpired,?NOT_SET, {ExpiredTime,yyu_ets_time_cache_item:get_data(CachedItem)})
   end.
+
 get_data(TbName,Key,Default)->
   case get_data(TbName,Key) of
     ?NOT_SET -> Default;
-    Value -> Value
+    {ExpiredTime,Data} -> {ExpiredTime,Data}
+  end.
+
+priv_get_cacheItem(TbName,Key)->
+  case ets:lookup(TbName,Key) of
+    []-> ?NOT_SET;
+    [{_Key,CachedItem}]->
+      CachedItem
   end.
 
 put_data(TbName,Key,Value,CachedTimeInSecond)->

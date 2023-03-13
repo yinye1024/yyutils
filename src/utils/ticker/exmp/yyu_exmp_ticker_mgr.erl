@@ -12,7 +12,7 @@
 -include("yyu_comm.hrl").
 
 %% API functions defined
--export([init/0,add_loop/3,add_once/3,tick/1]).
+-export([init/0,add_loop/3,add_once/2,tick/1]).
 
 %% ===================================================================================
 %% API functions implements
@@ -25,8 +25,8 @@ add_loop(Id,NowTime,{Cd,CdFun})->
   yyu_ticker_mgr:add_loop(?MODULE,Id,NowTime,Cd,CdFun),
   ?OK.
 
-add_once(Id,{NowTime,DelayInSec},{Cd,CdFun})->
-  yyu_ticker_mgr:add_once(?MODULE,Id,{NowTime,DelayInSec},Cd,CdFun),
+add_once(Id,{NowTime,DelayInSec,DelayFun})->
+  yyu_ticker_mgr:add_once(?MODULE,Id,{NowTime,DelayInSec,DelayFun}),
   ?OK.
 
 tick(NowTime)->

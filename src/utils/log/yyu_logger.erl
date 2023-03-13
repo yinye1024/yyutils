@@ -67,6 +67,10 @@ warning(TupleMsg,{ModName,FunName,Line}) when is_tuple(TupleMsg)->
 info(TupleMsg,{ModName,FunName,Line}) when is_tuple(TupleMsg)->
   TimeAndMFL = priv_get_time_and_mfl({ModName,FunName,Line}),
   lager:info(TimeAndMFL ++ " ~p \r\n",[TupleMsg]),
+  ?OK;
+info(TupleMsg,{ModName,FunName,Line}) when is_list(TupleMsg)->
+  TimeAndMFL = priv_get_time_and_mfl({ModName,FunName,Line}),
+  lager:info(TimeAndMFL ++ " ~s \r\n",[TupleMsg]),
   ?OK.
 
 debug(TupleMsg,{ModName,FunName,Line}) when is_tuple(TupleMsg)->

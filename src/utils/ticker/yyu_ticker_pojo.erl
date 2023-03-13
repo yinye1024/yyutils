@@ -13,7 +13,7 @@
 
 %% API functions defined
 -export([new_pojo/4]).
--export([get_id/1,is_loop/2]).
+-export([get_id/1, is_loop/1]).
 -export([is_do_fun_time/2,reset_do_fun_time/2,do_fun/2]).
 
 %% ===================================================================================
@@ -33,12 +33,16 @@ get_id(ItemMap) ->
   yyu_map:get_value(id, ItemMap).
 
 is_do_fun_time(NowTime,ItemMap)->
-  get_next_do_fun_time(ItemMap) > NowTime.
+  get_next_do_fun_time(ItemMap) < NowTime.
 
 do_fun(NowTime,ItemMap)->
   Fun = get_cd_fun(ItemMap),
   case get_param(ItemMap) of
-    ?NOT_SET -> Fun(NowTime);
+    ?NOT_SET ->
+      case yyu_fun:is_fun(Fun,0) of
+        ?TRUE -> Fun();
+        ?FALSE -> Fun(NowTime)
+      end;
     Param ->Fun(NowTime,Param)
   end,
   ?OK.
@@ -54,10 +58,8 @@ get_next_do_fun_time(ItemMap) ->
 set_next_do_fun_time(Value, ItemMap) ->
   yyu_map:put_value(next_do_fun_time, Value, ItemMap).
 
-
-
-is_loop(Value, ItemMap) ->
-  yyu_map:put_value(is_loop, Value, ItemMap).
+is_loop(ItemMap)->
+  yyu_map:get_value(is_loop, ItemMap).
 
 get_cd(ItemMap) ->
   yyu_map:get_value(cd, ItemMap).

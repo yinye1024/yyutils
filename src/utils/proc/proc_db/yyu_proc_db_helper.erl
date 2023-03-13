@@ -27,17 +27,17 @@ init({DataMapKey,VerMapKey})->
 
 %% 第一次put的时候要同步版本号
 put_pdata({DataMapKey,VerMapKey},NewData)->
-  Key = yyu_proc_data:get_key(NewData),
-  Ver = yyu_proc_data:get_ver(NewData),
+  Key = yyu_proc_db_item:get_key(NewData),
+  Ver = yyu_proc_db_item:get_ver(NewData),
   priv_put_pdata(DataMapKey,Key,NewData),
   put_ver(VerMapKey,Key,Ver),
   ?OK.
 
 %% 有老数据的时候不能同步版本号，版本号是在入库db，持久化之后才更新，确保和db的版本保持一致
 put_pdata({DataMapKey,_VerMapKey},OldData,NewData)->
-  Key = yyu_proc_data:get_key(NewData),
-  OldVer = yyu_proc_data:get_ver(OldData),
-  NewVer = yyu_proc_data:get_ver(NewData),
+  Key = yyu_proc_db_item:get_key(NewData),
+  OldVer = yyu_proc_db_item:get_ver(OldData),
+  NewVer = yyu_proc_db_item:get_ver(NewData),
   case NewVer > OldVer of
     ?TRUE ->
       priv_put_pdata(DataMapKey,Key,NewData),
