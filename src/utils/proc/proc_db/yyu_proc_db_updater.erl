@@ -10,11 +10,16 @@
 -include("yyu_comm.hrl").
 
 %% API functions defined
--export([update/1]).
+-export([update_key/2,update/1]).
 
 %% ===================================================================================
 %% API functions implements
 %% ===================================================================================
+update_key(Key,{DataMapKey,VerMapKey})->
+  Pdata = yyu_proc_db_helper:get_pdata(DataMapKey,Key),
+  priv_update(VerMapKey,Key,Pdata),
+  ?OK.
+
 update({DataMapKey,VerMapKey})->
   Fun =
   fun({Key,Pdata})->

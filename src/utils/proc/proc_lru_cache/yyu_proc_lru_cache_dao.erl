@@ -15,7 +15,7 @@
 %% API functions defined
 -export([proc_init/2,is_inited/1]).
 -export([get_lru_data/2,put_lru_data/3]).
--export([check_lru/1, put_back_expired_data/2]).
+-export([check_and_remove_expired/1, put_back_expired_data/2]).
 %% ===================================================================================
 %% API functions implements
 %% ===================================================================================
@@ -45,22 +45,20 @@ put_lru_data(ProcId,DataId,Data)->
   priv_put_adm(ProcId,LruItem_1),
   ?OK.
 
-check_lru(ProcId)->
+check_and_remove_expired(ProcId)->
   LruItem = priv_get_adm(ProcId),
   {ExpiredDataMap,LruItem_1} = yyu_proc_lru_item:check_lru(LruItem),
   priv_put_adm(ProcId,LruItem_1),
   ExpiredDataMap.
 
+%% 从 check_and_remove_expired(ProcId) 获得 ExpiredDataMapTmp
+%% ExpiredDataMapTmp 成功操作完，没有得到处理的data可以重新放入到过期数据里
+%% 等待下一轮处理
 put_back_expired_data(ProcId,ExpiredDataMap)->
   LruItem = priv_get_adm(ProcId),
   LruItem_1 = yyu_proc_lru_item:put_back_expired_data(yyu_map:to_kv_list(ExpiredDataMap),LruItem),
   priv_put_adm(ProcId,LruItem_1),
   ?OK.
-
-
-
-%% 从 check_lru 获得 {ExpiredDataMapTmp,LruItem_1}
-%% ExpiredDataMapTmp 成功操作完，才更新LruItem_1，否则不更新，下次重复操作
 priv_put_adm(ProcId,LruItem)->
   yyu_proc_cache_dao:put_data(ProcId,?DataKey,LruItem),
   ?OK.

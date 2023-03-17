@@ -14,7 +14,7 @@
 -export([get_first_item/1,get_last_item/1,get_item_by_index/2,get_tuple_by_key/2,get_tuple_by_key/3,get_max/1,get_min/1,reverse/1,key_sort/2]).
 -export([contains/2,is_empty/1,size_of/1]).
 -export([add_if_not_exist/2,append_if_not_exist/2,remove/2,remove_duplicate/1]).
--export([foreach/2]).
+-export([foreach/2,filter/2,map/2]).
 -export([sublist/2,sublist/3]).
 
 %% ===================================================================================
@@ -116,6 +116,13 @@ priv_remove_duplicate([Item|Less],AccList)->
 priv_remove_duplicate([],AccList)->
   AccList.
 
-
+%% fun(X) -> X rem 2 == 0,?Ok end
 foreach(Fun,List)->
   lists:foreach(Fun,List).
+
+%% fun(X) -> X rem 2 == 0 end
+filter(Pred,List) ->
+  lists:filter(Pred, List).
+%% fun(X) -> X * 2 end
+map(Pred,List) ->
+  lists:map(Pred, List).

@@ -12,7 +12,7 @@
 %% API functions defined
 -export([init/1]).
 -export([get_data/2,get_all_dataList/1,put_data/3,remove_data/2]).
--export([is_data_dirty/2,update_to_db/1]).
+-export([is_data_dirty/2,update_to_db/1,update_to_db/2]).
 
 %% ===================================================================================
 %% API functions implements
@@ -68,4 +68,8 @@ remove_data({DataMapKey,VerMapKey},Key)->
 
 update_to_db({DataMapKey,VerMapKey})->
   yyu_proc_db_updater:update({DataMapKey,VerMapKey}),
+  ?OK.
+
+update_to_db(Key,{DataMapKey,VerMapKey})->
+  yyu_proc_db_updater:update_key(Key,{DataMapKey,VerMapKey}),
   ?OK.

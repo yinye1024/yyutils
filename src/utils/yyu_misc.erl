@@ -16,6 +16,7 @@
 -export([sub_atom/2,list_to_atom/1]).
 -export([to_atom/1,to_list/1,to_binary/1,to_float/1,to_integer/1,to_tuple/1]).
 -export([term_to_string/1,string_to_term/1,string_to_num/1]).
+-export([term_to_bin/1, bin_to_term/1]).
 -export([get_ip/1]).
 -export([incr_ver/1]).
 
@@ -121,6 +122,11 @@ string_to_term(Input) when is_list(Input)->
     _Error ->
       ?UNDEFINED
   end.
+
+term_to_bin(Term)->
+  erlang:term_to_binary(Term).
+bin_to_term(Bin)->
+  erlang:binary_to_term(Bin).
 
 string_to_num(Str)->
   case lists:member($.,Str) of
