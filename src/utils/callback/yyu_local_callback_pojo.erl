@@ -24,7 +24,7 @@ new_cb(CallbackFun) when is_function(CallbackFun)->
 new_cb(CallbackFun,LocalParam)->
   Cb = new_cb(CallbackFun),
   Cb#{
-    param = LocalParam
+    param => LocalParam
   }.
 
 do_callback(_CbParam,?NOT_SET)->?OK;

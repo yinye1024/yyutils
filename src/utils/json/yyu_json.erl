@@ -35,7 +35,7 @@ struct_to_map(Ls = [ _|_ ])->
   lists:map(Fun,Ls);
 struct_to_map({struct, KList = [ {_,_} | _ ]})->
   Fun = fun({Key,Value}) ->
-    Key2 = try binary_to_atom(Key,utf8) catch _:_:_ ->Key end,
+    Key2 = try binary_to_existing_atom(Key,utf8) catch _:_:_ ->Key end,
     {Key2, struct_to_map(Value)}
         end,
   Ls2 = lists:map(Fun,KList),

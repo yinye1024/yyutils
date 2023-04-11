@@ -50,7 +50,8 @@ start() ->
   application:set_env(lager, killer_hwm, 2000),
   application:set_env(lager, killer_reinstall_after, 5000),
 
-  lager:start(),
+%%  lager:start(),
+  erlang:apply(lager, start, []),
   ?OK.
 
 error(TupleMsg,{ModName,FunName,Line}) when is_tuple(TupleMsg)->

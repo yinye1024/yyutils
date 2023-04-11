@@ -117,7 +117,7 @@ priv_copy([],_ExcludeKeyList,AccMap)->
 %% DataMap = yyu_map:map(PredFun,ItemMap),
 map(Fun,Map)->
   maps:map(Fun,Map).
-%% PredFun = fun(DataId,_Data) -> yyu_list:contains(DataId,DataIdList) end,
-%% DataMap = yyu_map:filter(PredFun,ItemMap),
+%% FilterFun = fun(DataId,_Data) -> yyu_list:contains(DataId,DataIdList) end,
+%% DataMap = yyu_map:filter(FilterFun,ItemMap),
 filter(PredFun,Map)->
   maps:filter(PredFun,Map).
