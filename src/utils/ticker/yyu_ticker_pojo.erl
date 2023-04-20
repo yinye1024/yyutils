@@ -36,6 +36,15 @@ is_do_fun_time(NowTime,ItemMap)->
   get_next_do_fun_time(ItemMap) < NowTime.
 
 do_fun(NowTime,ItemMap)->
+  try
+    priv_do_fun(NowTime,ItemMap)
+  catch
+    ErrorType:ErrorReason:Stacktrace  ->
+      ?LOG_ERROR({ErrorType,ErrorReason,Stacktrace}),
+      {?FAIL}
+  end,
+  ?OK.
+priv_do_fun(NowTime,ItemMap)->
   Fun = get_cd_fun(ItemMap),
   case get_param(ItemMap) of
     ?NOT_SET ->

@@ -47,9 +47,17 @@ put_lru_data(ProcId,DataId,Data)->
 
 check_and_remove_expired(ProcId)->
   LruItem = priv_get_adm(ProcId),
-  {ExpiredDataMap,LruItem_1} = yyu_proc_lru_item:check_lru(LruItem),
-  priv_put_adm(ProcId,LruItem_1),
+  ExpiredDataMap =
+  case yyu_proc_lru_item:check_lru(LruItem) of
+    {ExpiredDataMapTmp,LruItem_1} ->
+      priv_put_adm(ProcId,LruItem_1),
+      ExpiredDataMapTmp;
+    ?NO_CHANGE ->
+      yyu_map:new_map()
+  end,
   ExpiredDataMap.
+
+
 
 %% 从 check_and_remove_expired(ProcId) 获得 ExpiredDataMapTmp
 %% ExpiredDataMapTmp 成功操作完，没有得到处理的data可以重新放入到过期数据里

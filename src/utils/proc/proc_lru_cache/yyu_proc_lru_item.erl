@@ -8,7 +8,7 @@
 %%%-------------------------------------------------------------------
 -module(yyu_proc_lru_item).
 -author("yinye").
--include("yyu_comm_atoms.hrl").
+-include("yyu_comm.hrl").
 
 %% API functions defined
 -export([new/2,get_id/1]).
@@ -50,7 +50,7 @@ check_lru(ItemMap)->
       ItemMap_4 = priv_update_expired_time(ItemMap_3),
       {ExpiredDataMap,ItemMap_4};
     ?FALSE ->
-      ?OK
+      ?NO_CHANGE
   end,
   CheckResult.
 priv_get_data_map(DataIdList,ItemMap)->

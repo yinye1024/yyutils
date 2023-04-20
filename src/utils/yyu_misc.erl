@@ -114,8 +114,8 @@ term_to_string(Term) ->
 %% @doc term 反序列化，e.g., “[{a},1]” => [{a},1]
 string_to_term(Input) when is_list(Input)->
   case erl_scan:string(Input ++".") of
-    {?OK,Token,_}->
-      case erl_parse:parse_term(Token) of
+    {?OK, Tokens,_}->
+      case erl_parse:parse_term(Tokens) of
         {?OK,Term} -> Term;
         _Err ->  ?UNDEFINED
       end;

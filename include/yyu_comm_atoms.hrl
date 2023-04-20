@@ -29,6 +29,7 @@
 -define(UNDEFINED,undefined).
 -define(NOT_FOUND,not_found).
 -define(NOT_SET,not_set).
+-define(NO_CHANGE,no_change).
 
 -define(DB_ERROR,db_error).
 

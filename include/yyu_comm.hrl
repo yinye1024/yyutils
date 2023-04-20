@@ -22,7 +22,7 @@
 -define(MAX_INT_64,9223372036854775807).
 
 -define(GEN_CALL_TIMEOUT,5000).  %% 进程 call 超时时间
--define(GEN_PERSIST_SPAN,5*1000).  %% 进程进行持久化的间隔时间，默认5分钟
+-define(GEN_PERSIST_SPAN,5*60*1000).  %% 进程进行持久化的间隔时间，默认5分钟，测试持久化的时候可以开快一点
 -define(GEN_TICK_SPAN,1000).  %% 进程tick的时间，默认1秒 tick 一次
 
 -define(DO_FUN(Fun,Param),{do_fun,Fun,Param}).

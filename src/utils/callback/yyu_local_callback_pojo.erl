@@ -8,7 +8,7 @@
 %%%-------------------------------------------------------------------
 -module(yyu_local_callback_pojo).
 -author("yinye").
--include("yyu_comm_atoms.hrl").
+-include("yyu_comm.hrl").
 
 %% API functions defined
 -export([new_cb/1,new_cb/2, do_callback/2]).
@@ -38,7 +38,7 @@ do_callback(CbParam,ItemMap)->
           CbFun(Pid,CbParam),
           ?OK;
         LocalParam ->
-          CbFun(Pid,CbParam,LocalParam),
+          CbFun(Pid,{LocalParam,CbParam}),
           ?OK
       end
   end,
