@@ -14,7 +14,7 @@
 %% API functions defined
 -export([new_map/0,put_value/3,get_value/2,get_value/3, get_value_list/2,remove/2,remove_all/2,delete/2]).
 -export([is_empty/1,has_key/2,size_of/1,all_keys/1,all_values/1]).
--export([to_kv_list/1,from_kv_list/1,for_each/3,for_each/2,copy/2,copy/3]).
+-export([to_kv_list/1,from_kv_list/1,for_each/3,for_each/2,copy/2,copy/3,merge/2]).
 -export([map/2,filter/2]).
 
 %% ===================================================================================
@@ -112,6 +112,9 @@ priv_copy([{Key,Value}|Less],ExcludeKeyList,AccMap)->
   priv_copy(Less,ExcludeKeyList,NewAccMap);
 priv_copy([],_ExcludeKeyList,AccMap)->
   AccMap.
+
+merge(MapA,MapB)->
+  maps:merge(MapA,MapB).
 
 %% Fun(K,V)-> V_1 = do_something_to(V),V_1 end.
 %% DataMap = yyu_map:map(PredFun,ItemMap),

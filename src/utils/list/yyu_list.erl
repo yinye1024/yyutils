@@ -14,8 +14,9 @@
 -export([get_first_item/1,get_last_item/1,get_item_by_index/2,get_tuple_by_key/2,get_tuple_by_key/3,get_max/1,get_min/1,reverse/1,key_sort/2]).
 -export([contains/2,is_empty/1,size_of/1]).
 -export([add_if_not_exist/2,append_if_not_exist/2,remove/2,remove_duplicate/1]).
--export([foreach/2,filter/2,filter_one/2,map/2]).
+-export([foreach/2,foreach/3,filter/2,filter_one/2,map/2]).
 -export([sublist/2,sublist/3]).
+-export([union_add_all/2]).
 
 %% ===================================================================================
 %% API functions implements
@@ -116,9 +117,29 @@ priv_remove_duplicate([Item|Less],AccList)->
 priv_remove_duplicate([],AccList)->
   AccList.
 
-%% fun(X) -> X rem 2 == 0,?Ok end
+union_add_all([Hd|Less],ListB)->
+  ListB_1 =
+  case contains(Hd,ListB) of
+    ?TRUE -> ListB;
+    ?FALSE -> [Hd|ListB]
+  end,
+  union_add_all(Less,ListB_1);
+union_add_all([],ListB)->
+  ListB.
+
+%% Fun = fun(X) -> X rem 2 == 0,?OK end
 foreach(Fun,List)->
   lists:foreach(Fun,List).
+
+%%  Fun = fun({Key,Value},AccPropMap) ->
+%%        OldValue = yyu_map:get_value(Key,0,AccPropMap),
+%%        NewValue = OldValue+Value,
+%%        AccPropMap_1 = yyu_map:put_value(Key,NewValue,AccPropMap),
+%%        AccPropMap_1
+%%  end,
+%%  PropMap_1 = yyu_list:foreach(Fun, PropMap,PropKVList).
+foreach(Fun,Acc,List)->
+  lists:foldl(Fun,Acc,List).
 
 %% fun(X) -> X rem 2 == 0 end
 filter(Pred,List) ->
