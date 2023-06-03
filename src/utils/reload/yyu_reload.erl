@@ -18,7 +18,7 @@
 %% API functions implements
 %% ===================================================================================
 reload_all()->
-  Mods = diff_mods(),
+  Mods = priv_get_all_diff_mods(),
   reload_mods(Mods).
 
 reload_mods(Mods) when is_list(Mods) ->
@@ -42,7 +42,7 @@ reload_mod(Mod)->
       ?TRUE  %% 无需热更，用的时候，系统会自动加载
   end.
 
-diff_mods() ->
+priv_get_all_diff_mods() ->
   Fun = fun({M,FileName},Acc)->
 
           case code:is_sticky(M) of

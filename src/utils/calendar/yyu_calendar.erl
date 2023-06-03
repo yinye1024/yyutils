@@ -11,13 +11,16 @@
 -include("yyu_comm_atoms.hrl").
 
 %% API functions defined
--export([local_time/0]).
+-export([local_time/0,datetime_to_gregorian_seconds/1]).
 %% ===================================================================================
 %% API functions implements
 %% ===================================================================================
 local_time()->
-  NowTime = yyu_time:timestamp(),
-  now_to_local_time(NowTime).
-now_to_local_time({MSec,Sec,USec})->
+  {MSec,Sec,USec} = yyu_time:timestamp(),
   calendar:now_to_local_time({MSec,Sec,USec}).
+
+datetime_to_gregorian_seconds({Date, Time})->
+  calendar:datetime_to_gregorian_seconds({Date, Time}).
+
+
 
