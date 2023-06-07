@@ -52,9 +52,9 @@ priv_format_code(ModNameStr, KvList)->
   GetFunStr = lists:foldl(
     fun({Key,Value},AccStr)->
       priv_gen_get_str(Key,Value) ++ AccStr
-    end,"get(_) -> undefined;\n\n", KvList
+    end,"get(_) -> undefined.\n\n", KvList
   ),
-  AllFunStr = io_lib:format("all()->~w.\n\n",KvList),
+  AllFunStr = io_lib:format("all()->~w.\n\n",[KvList]),
   HeadStr = io_lib:format("-module(~ts).\n -compile(export_all).\n\n\n",[ModNameStr]),
   lists:flatten(HeadStr++ GetFunStr ++ AllFunStr).
 

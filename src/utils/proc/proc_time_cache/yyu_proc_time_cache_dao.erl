@@ -41,7 +41,7 @@ get_data(ProcId,Key)->
 put_data(ProcId,Key, Data,CacheTimeSec) ->
   DataMap = get(ProcId),
   ExpiredTime = yyu_time:now_seconds()+CacheTimeSec,
-  CacheItem = yyu_proc_time_cache_item:new(Key,DataMap,ExpiredTime),
+  CacheItem = yyu_proc_time_cache_item:new(Key,Data,ExpiredTime),
   NewDataMap = yyu_map:put_value(Key, CacheItem,DataMap),
   put(ProcId,NewDataMap),
   ?OK.

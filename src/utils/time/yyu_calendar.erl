@@ -21,10 +21,18 @@
 -define(Ms2Sec(Seconds),(Seconds div 1000)).
 
 %% API functions defined
+-export([local_time/0,datetime_to_gregorian_seconds/1]).
 -export([now_time/0,now_date/0,now_date_time/0,seconds_to_date_time/1]).
 %% ===================================================================================
 %% API functions implements
 %% ===================================================================================
+local_time()->
+  {MSec,Sec,USec} = yyu_time:timestamp(),
+  calendar:now_to_local_time({MSec,Sec,USec}).
+
+datetime_to_gregorian_seconds({Date, Time})->
+  calendar:datetime_to_gregorian_seconds({Date, Time}).
+
 %% Time = {Hour,Minutes,Seconds}
 now_time()->
   {_Date,Time} = calendar:local_time(),
