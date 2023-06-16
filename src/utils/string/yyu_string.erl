@@ -11,7 +11,7 @@
 -include("yyu_comm.hrl").
 
 %% API functions defined
--export([concat/1,format/2,is_String/1,is_num_str/1, tokens/2,start_with/2]).
+-export([concat/1,format/2,flatten/1,is_String/1,is_num_str/1, tokens/2,start_with/2]).
 -export([characters_to_binary/1,list_string_to_binary/2]).
 
 %% ===================================================================================
@@ -22,6 +22,10 @@ concat(StrList) when is_list(StrList) ->
 
 format(Format, Args)->
   io_lib:format(Format, Args).
+
+%% 把字符串列表转换成字符串
+flatten(String) when is_list(String)->
+  lists:flatten(String).
 
 is_String(Input)->
   io_lib:char_list(Input).

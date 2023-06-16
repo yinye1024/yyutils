@@ -6,7 +6,7 @@
   0},
  {<<"mochiweb">>,
   {git,"https://github.com/mochi/mochiweb.git",
-       {ref,"d3d3d7bd54d87afa45470a540d41d62e19a31400"}},
+       {ref,"bd0c848040b57513c824b58f1c0c5e6d3d045dea"}},
   0}]}.
 [
 {pkg_hash,[
