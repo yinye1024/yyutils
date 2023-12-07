@@ -15,6 +15,8 @@
 -export([get_data/2,get_data/3, priv_get_cacheItem/2]).
 -export([put_data/4,remove/2,clean/1]).
 -export([check_and_clean_expired/1]).
+
+
 %% ===================================================================================
 %% API functions implements
 %% ===================================================================================
@@ -31,6 +33,14 @@ init_multi_gen_write(TbName) ->
 is_inited(TbName)->
   ets:info(TbName) =/= ?UNDEFINED.
 
+
+get_data(TbName,Key,Default)->
+  case get_data(TbName,Key) of
+    ?NOT_SET -> Default;
+    {ExpiredTime,Data} -> {ExpiredTime,Data}
+  end.
+
+
 get_data(TbName,Key)->
   case priv_get_cacheItem(TbName,Key) of
     ?NOT_SET -> ?NOT_SET;
@@ -39,13 +49,6 @@ get_data(TbName,Key)->
       IsExpired = ExpiredTime < yyu_time:now_seconds(),
       ?IF(IsExpired,?NOT_SET, {ExpiredTime,yyu_ets_time_cache_item:get_data(CachedItem)})
   end.
-
-get_data(TbName,Key,Default)->
-  case get_data(TbName,Key) of
-    ?NOT_SET -> Default;
-    {ExpiredTime,Data} -> {ExpiredTime,Data}
-  end.
-
 priv_get_cacheItem(TbName,Key)->
   case ets:lookup(TbName,Key) of
     []-> ?NOT_SET;
@@ -68,21 +71,19 @@ clean(TbName)->
   ?OK.
 
 check_and_clean_expired(TbName)->
-  AllList = get_all_valueList(TbName),
-  priv_check_and_clean_expired(AllList,TbName).
-priv_check_and_clean_expired([CachedItem|Less],TbName)->
-  IsExpired = yyu_ets_time_cache_item:get_expired_time(CachedItem) < yyu_time:now_seconds(),
-  Key = yyu_ets_time_cache_item:get_key(CachedItem),
-  case IsExpired of
-    ?TRUE -> remove(TbName,Key);
-    ?FALSE -> ?OK
-  end,
-  priv_check_and_clean_expired(Less,TbName);
-priv_check_and_clean_expired([],_TbName)->
+  AllExpiredList = priv_get_all_expired_key_list(TbName),
+  priv_clean_expired(AllExpiredList,TbName).
+priv_get_all_expired_key_list(TbName)->
+  NowTime = yyu_time:now_seconds(),
+  Q = ets:fun2ms(fun({Key,#{expired_time => ExpiredTime}}) when NowTime > ExpiredTime -> Key end),
+  KeyList = ets:select(TbName,Q),
+  KeyList.
+priv_clean_expired([Key|Less],TbName)->
+  remove(TbName,Key),
+  priv_clean_expired(Less,TbName);
+priv_clean_expired([],_TbName)->
   ?OK.
-get_all_valueList(TbName)->
-  All = ets:tab2list(TbName),
-  [Value || {_Key,Value} <- All].
+
 
 
 
