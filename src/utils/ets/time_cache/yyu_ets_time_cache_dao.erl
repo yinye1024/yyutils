@@ -75,7 +75,7 @@ check_and_clean_expired(TbName)->
   priv_clean_expired(AllExpiredList,TbName).
 priv_get_all_expired_key_list(TbName)->
   NowTime = yyu_time:now_seconds(),
-  Q = ets:fun2ms(fun({Key,#{expired_time => ExpiredTime}}) when NowTime > ExpiredTime -> Key end),
+  Q = ets:fun2ms(fun({Key,#{expired_time := ExpiredTime}}) when NowTime > ExpiredTime -> Key end),
   KeyList = ets:select(TbName,Q),
   KeyList.
 priv_clean_expired([Key|Less],TbName)->
